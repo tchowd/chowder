@@ -8,19 +8,12 @@ import BigNumber from 'bignumber.js';
 import { VStack, Text, Button, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Input } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-export interface IBundlrHook {
-  initialiseBundlr: () => Promise<void>;
-  fundWallet: (_: number) => void;
-  balance: string;
-  uploadFile: (file: Buffer) => Promise<any>;
-  bundlrInstance: WebBundlr;
-}
 
 const Upload: NextPage = () => {
 
   const [bundlrInstance, setBundlrInstance] = useState<WebBundlr>();
-    const [balance, setBalance] = useState<string>('');
-    const [value, setValue] = useState('0.02')
+  const [balance, setBalance] = useState<string>('');
+  const [value, setValue] = useState('0.02')
 
 
     useEffect(() => {
@@ -83,14 +76,12 @@ const Upload: NextPage = () => {
         }
     }
 
-    async function uploadFile(file: any) {
-      if (bundlrInstance) {
-        let tx = await bundlrInstance.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }])
-        return tx;
-      }
-        
-    }
-
+    // async function uploadFile(file) {
+    //     try {
+    //         let tx = await bundlrInstance.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }])
+    //         return tx;
+    //     } 
+    // }
     if (!bundlrInstance) {
       return (
         <div className='justify-center items-center h-screen flex '>
@@ -109,24 +100,13 @@ const Upload: NextPage = () => {
       <Text fontSize={'xl'}>
                     Your current balace is: {balance || 0} $BNDLR
                 </Text>
-
-                {/* <NumberInput className='mx-auto' step={0.01} defaultValue={value}
-                    onChange={(valueString) => setValue(valueString)}
-                >
-                    <NumberInputField />
-                    <NumberInputStepper >
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                    </NumberInputStepper>
-                </NumberInput> */}
-
                 <Input
                   placeholder="add funds"
                   onChange={(e) => setValue((e as any).target.value)}
                 />
                 <Button onClick={() => fundWallet(+value)}>💸 Add Fund</Button>
 
-
+                {/* <UploadImage /> */}
 
     </div>
   );
