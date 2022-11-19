@@ -8,6 +8,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 // Imports
 import { chain, createClient, WagmiConfig, configureChains } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { publicProvider } from 'wagmi/providers/public';
 
 import '@rainbow-me/rainbowkit/styles.css';
@@ -39,12 +40,24 @@ const hardhatChain: Chain = {
 };
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum, hardhatChain],
-  [alchemyProvider({ alchemyId }), publicProvider()]
+  [chain.polygonMumbai], 
+  [
+    jsonRpcProvider({
+      rpc: () => {
+        return {
+          http: 'https://rpc.ankr.com/polygon_mumbai', 
+        };
+      },
+    }),
+    publicProvider(),
+  ]
 );
 
+// const desiredChainId = ChainId.Polygon;
+
+
 const { connectors } = getDefaultWallets({
-  appName: 'create-web3',
+  appName: 'Bundlr arweave testnet demo',
   chains,
 });
 
