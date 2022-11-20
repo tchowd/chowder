@@ -3,7 +3,7 @@ import React from 'react'
 
 function PendingImages() {
   return (
-    <Container maxW={'4xl'} marginTop={'-10rem'}>
+    <Container maxW={'4xl'} marginTop={'2rem'}>
     <HStack zIndex={1}>
       <Box position={'relative'}
         width={'18rem'}

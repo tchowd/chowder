@@ -11,22 +11,51 @@ import PendingImages from "../profile/PendingImages";
 import ProfileInfo from "../profile/ProfileInfo";
 import { GrLocation } from 'react-icons/gr';
 import GeoLocation from "../profile/GeoLocation";
+import { readFileSync } from "fs";
+import abi from "../../utils/uploadStorage.json"
+import { ethers } from "ethers";
+import { stripZeros } from "ethers/lib/utils";
 
 
 
+type Props = {
+    upload: any;
+  };
 
-const UploadFile: NextPage = () => {
-  const [value, setValue] = useState('0.02')
+
+function UploadFile()  {
+  const [value, setValue] = useState('')
   const [bundlrInstance, setBundlrInstance] = useState<WebBundlr>();
   const [balance, setBalance] = useState<string>('');
   const [file, setFile] = useState<Buffer>()
   const [image, setImage] = useState('')
   const hiddenFileInput = useRef(null);
   const [URI, setURI] = useState('')
-  
+  const contractAddress = "0x47b837D8F4D14Bf78C608f1a33F35DB8BE325Ca6";
 
 
+  if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+    const signer = provider.getSigner();
+    const contractABI = abi.abi;
+    const uploadStorage = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+  }
 
+//   const getHashes = async() => {
+//     uint256 size = uploadStorage.uploads.size();
+//     string hash[size];
+//     for(int j = 0; i < size; i++){
+//         hash[j] = uploadStorage.uploads[j];
+//     }
+//   }
+
+//   const getImage(string hash) {
+
+//   }
 
     useEffect(() => {
         if (bundlrInstance) {
@@ -54,9 +83,12 @@ const UploadFile: NextPage = () => {
     };
 
     async function uploadFile(file) {
-            let tx = await bundlrInstance.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }, {name: "Content-Type", value: "text/rtf"}])
-            return tx;
+        // const data = readFileSync(file)
+        let tx = await bundlrInstance?.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }, {name: "Content-Type", value: "text/plain"}])
+        return tx;
     }
+    
+
 
     const handleUpload = async () => {
         const res = await uploadFile(file);
@@ -205,6 +237,7 @@ const UploadFile: NextPage = () => {
                             </Box>
                             </Center>
                             <Center marginTop={'3rem'}>
+                            <VStack>
                         {
                             image && 
                             <>
@@ -220,19 +253,27 @@ const UploadFile: NextPage = () => {
                                 // backgroundColor={'gray.100'}
                                 zIndex={1}
                                 padding={'0.6rem'}
-                            />
-                            <Center>
+                            >
+                             <Center marginTop={'5rem'}>
                                 <Button className='bg-gray-200 rounded px-8 py-2 text-black hover:bg-gray-100' onClick={handleUpload}>Upload File</Button>
-                                {/* <Input placeholder="Describe the image"> </Input> */}
                             </Center>
+                            </Box>
                             </VStack>
                             </>
                             
+                            
                         }
-                        
+                       
+                        { URI &&  
+                            <a href={URI} target="_blank"> 
+                                <Button> View Image</Button>
+                             </a>
+                        }
+                        </VStack>
+                            
                         </Center>
-                        <a href={URI} target="_blank">{URI}
-                        <Box position={'relative'}
+                        
+                        {/* <Box position={'relative'}
                             width={'18rem'}
                             borderRadius={'1rem'}
                             overflow={'hidden'}
@@ -241,12 +282,14 @@ const UploadFile: NextPage = () => {
                             // backgroundColor={'gray.100'}
                             zIndex={-1}
                             padding={'0.6rem'} />  
-                            </a>
-                        {
+                          <a href={URI} target="_blank"> 
+                          <Button> View Image</Button>
+                           </a> */}
+                        {/* {
                             URI && <Text>
                                 <Text fontSize='xl'> Uploaded File:</Text> <a href={URI} target="_blank">{URI}</a>
                             </Text>
-                        }
+                        } */}
                         
                     </div>
                 )
