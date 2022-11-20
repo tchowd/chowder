@@ -5,10 +5,13 @@ import { useEffect, useState, useRef } from "react";
 import { WebBundlr } from '@bundlr-network/client';
 import { providers, utils } from 'ethers';
 import BigNumber from 'bignumber.js';
-import { VStack, Text, Button, Circle, Input, Box, Container, Center } from "@chakra-ui/react";
+import { VStack, Text, Button, Circle, Input, Box, Container, Center, Divider } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import PendingImages from "../profile/PendingImages";
 import ProfileInfo from "../profile/ProfileInfo";
+import { GrLocation } from 'react-icons/gr';
+import GeoLocation from "../profile/GeoLocation";
+
 
 
 
@@ -20,6 +23,7 @@ const UploadFile: NextPage = () => {
   const [image, setImage] = useState('')
   const hiddenFileInput = useRef(null);
   const [URI, setURI] = useState('')
+  
 
 
 
@@ -136,12 +140,20 @@ const UploadFile: NextPage = () => {
             <Container maxW={'7xl'}>
                 <Center>
                 
-                <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'whiteAlpha.400'} padding={'1rem'} width={'20rem'} height={'10rem'}>
+                <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'20rem'} height={'11rem'} marginRight={'2rem'}>
                 <Center>
                     <VStack>
-                    <Text fontSize={'sm'}>
-                        Current balance: {balance || 0} $BNDLR
-                    </Text>
+                        <VStack>
+                            <Text fontSize={'sm'}>
+                            $BNDLR Balance: 
+                            </Text>
+                            </VStack>
+                            <VStack>
+                            <Text fontSize={'sm'}>
+                                {balance || 0} 
+                            </Text>
+                         </VStack>
+                         
                     <Input
                     placeholder="add funds"
                     onChange={(e) => setValue((e as any).target.value)}
@@ -151,33 +163,38 @@ const UploadFile: NextPage = () => {
                 </Center>
                 </Box>
 
-                <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'whiteAlpha.400'} padding={'1rem'} width={'20rem'} height={'10rem'}>
-                <Center>
+                <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'20rem'} height={'11rem'}>
+                <Center marginTop={'1rem'}>
                     <VStack>
-                    <Text fontSize={'xl'}>
-                        Confirm Geolocation
+                    <Text fontSize={'sm'}>
+                        Proof of Location
                     </Text>
-                    <Input
-                    placeholder="add funds"
-                    onChange={(e) => setValue((e as any).target.value)}
-                    />
-                    <Button onClick={() => fundWallet(+value)}>💸 Add Fund</Button>
+                  
+                    <GeoLocation />
+
+                    <Text fontSize={'sm'}>
+                        Why should I share my location?
+                    </Text>
                     </VStack>
                 </Center>
                 </Box>
                             
                             </Center>
-                            
+
+                            <Divider maxW={'8xl'} paddingTop={'2rem'}/>
             </Container>
+           
             
                 {balance && (
                     <div>
                         <Center>
                         <Box>
-                            <Text> Get started</Text>
-                        <Button onClick={handleClick} className='mb-4'>
+                            <VStack>
+                            <Text paddingTop={'5rem'} fontSize={'xl'}> Select an image or video to get started:</Text>
+                            <Button onClick={handleClick} className='mb-4'>
                                 {image ? 'Change Selection' : 'Select Image'}
                             </Button>
+                            </VStack>
                             <input
                                 accept="image/png, image/gif, image/jpeg, text/rtf, video/mp4"
                                 type="file"
@@ -187,23 +204,33 @@ const UploadFile: NextPage = () => {
                             />
                             </Box>
                             </Center>
+                            <Center marginTop={'3rem'}>
                         {
-                            image &&
+                            image && 
+                            <>
+                            <VStack>
                             <Box
-                                display='flex'
-                                alignItems='center'
-                                justifyContent='center'
-                                width='100%'
-                                py={40}
+                                position={'relative'}
                                 bgImage={`url('${image}')`}
-                                bgPosition='center'
-                                bgRepeat='no-repeat'
-                                mb={2}
-                            >
-                                <button className='bg-gray-200 rounded px-8 py-2 text-black hover:bg-gray-100' onClick={handleUpload}>Upload File</button>
-                            </Box>
+                                width={'18rem'}
+                                borderRadius={'1rem'}
+                                overflow={'hidden'}
+                                // bgImage={`url('${image}')`}
+                                height={'15rem'}
+                                // backgroundColor={'gray.100'}
+                                zIndex={1}
+                                padding={'0.6rem'}
+                            />
+                            <Center>
+                                <Button className='bg-gray-200 rounded px-8 py-2 text-black hover:bg-gray-100' onClick={handleUpload}>Upload File</Button>
+                                {/* <Input placeholder="Describe the image"> </Input> */}
+                            </Center>
+                            </VStack>
+                            </>
+                            
                         }
                         
+                        </Center>
                         <a href={URI} target="_blank">{URI}
                         <Box position={'relative'}
                             width={'18rem'}
