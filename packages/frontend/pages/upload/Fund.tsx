@@ -7,6 +7,7 @@ import { providers, utils } from 'ethers';
 import BigNumber from 'bignumber.js';
 import { VStack, Text, Button, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Input, Box } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import UploadFile from "./UploadFile";
 
 
 const Fund: NextPage = () => {
@@ -77,7 +78,19 @@ const Fund: NextPage = () => {
     }
   
 
-
+if (!bundlrInstance) {
+      return (
+        <div className='justify-center items-center h-screen flex '>
+          <VStack gap={8}>
+            <ConnectButton />
+            <Text className='text-4xl font-bold'>
+              Let's initialise Bundlr now
+            </Text>
+            <Button className='mt-10' onClick={initialiseBundlr}>Initialise Bundlr</Button>
+          </VStack>
+        </div>
+      )
+    }
   
   return (
     <div>

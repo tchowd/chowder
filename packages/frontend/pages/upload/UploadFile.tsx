@@ -5,12 +5,15 @@ import { useEffect, useState, useRef } from "react";
 import { WebBundlr } from '@bundlr-network/client';
 import { providers, utils } from 'ethers';
 import BigNumber from 'bignumber.js';
-import { VStack, Text, Button, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Input, Box } from "@chakra-ui/react";
+import { VStack, Text, Button, Circle, Input, Box, Container, Center } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import PendingImages from "../profile/PendingImages";
+import ProfileInfo from "../profile/ProfileInfo";
+
 
 
 const UploadFile: NextPage = () => {
-
+  const [value, setValue] = useState('0.02')
   const [bundlrInstance, setBundlrInstance] = useState<WebBundlr>();
   const [balance, setBalance] = useState<string>('');
   const [file, setFile] = useState<Buffer>()
@@ -75,6 +78,22 @@ const UploadFile: NextPage = () => {
 
     }
 
+    async function fundWallet(amount: number) {
+        try {
+            if (bundlrInstance) {
+                if (!amount) return
+                const amountParsed = parseInput(amount)
+                if (amountParsed) {
+                    let response = await bundlrInstance.fund(amountParsed)
+                    console.log('Wallet funded: ', response)
+                }
+                fetchBalance()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
 
     function parseInput(input: number) {
         const conv = new BigNumber(input).multipliedBy(bundlrInstance!.currencyConfig.base[1])
@@ -96,15 +115,67 @@ const UploadFile: NextPage = () => {
         }
     }
   
-
+    if (!bundlrInstance) {
+        return (
+          <div className='justify-center items-center h-screen flex '>
+            <VStack gap={8}>
+              <ConnectButton />
+              <Text className='text-4xl font-bold'>
+                Let's initialise Bundlr now
+              </Text>
+              <Button className='mt-10' onClick={initialiseBundlr}>Initialise Bundlr</Button>
+            </VStack>
+          </div>
+        )
+      }
 
    
   return (
     <div>
+        <ProfileInfo />
+            <Container maxW={'7xl'}>
+                <Center>
+                
+                <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'whiteAlpha.400'} padding={'1rem'} width={'20rem'} height={'10rem'}>
+                <Center>
+                    <VStack>
+                    <Text fontSize={'sm'}>
+                        Current balance: {balance || 0} $BNDLR
+                    </Text>
+                    <Input
+                    placeholder="add funds"
+                    onChange={(e) => setValue((e as any).target.value)}
+                    />
+                    <Button onClick={() => fundWallet(+value)}>💸 Add Fund</Button>
+                    </VStack>
+                </Center>
+                </Box>
+
+                <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'whiteAlpha.400'} padding={'1rem'} width={'20rem'} height={'10rem'}>
+                <Center>
+                    <VStack>
+                    <Text fontSize={'xl'}>
+                        Confirm Geolocation
+                    </Text>
+                    <Input
+                    placeholder="add funds"
+                    onChange={(e) => setValue((e as any).target.value)}
+                    />
+                    <Button onClick={() => fundWallet(+value)}>💸 Add Fund</Button>
+                    </VStack>
+                </Center>
+                </Box>
+                            
+                            </Center>
+                            
+            </Container>
+            
                 {balance && (
                     <div>
-                        <>
-                            <Button onClick={handleClick} className='mb-4'>
+                        <Center>
+                        <Box>
+                            <Text> Get started</Text>
+                        <Button onClick={handleClick} className='mb-4'>
                                 {image ? 'Change Selection' : 'Select Image'}
                             </Button>
                             <input
@@ -114,7 +185,8 @@ const UploadFile: NextPage = () => {
                                 onChange={onFileChange}
                                 style={{ display: 'none' }}
                             />
-                        </>
+                            </Box>
+                            </Center>
                         {
                             image &&
                             <Box
@@ -131,15 +203,28 @@ const UploadFile: NextPage = () => {
                                 <button className='bg-gray-200 rounded px-8 py-2 text-black hover:bg-gray-100' onClick={handleUpload}>Upload File</button>
                             </Box>
                         }
-
+                        
+                        <a href={URI} target="_blank">{URI}
+                        <Box position={'relative'}
+                            width={'18rem'}
+                            borderRadius={'1rem'}
+                            overflow={'hidden'}
+                            bgImage={`url('${image}')`}
+                            height={'15rem'}
+                            // backgroundColor={'gray.100'}
+                            zIndex={-1}
+                            padding={'0.6rem'} />  
+                            </a>
                         {
-                            URI && <Text className='mt-4'>
+                            URI && <Text>
                                 <Text fontSize='xl'> Uploaded File:</Text> <a href={URI} target="_blank">{URI}</a>
                             </Text>
                         }
+                        
                     </div>
                 )
             }
+            {balance && !image ? <PendingImages/> : null}
                 </div>
   );
 };

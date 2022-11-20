@@ -9,6 +9,8 @@ import { VStack, Text, Button, NumberDecrementStepper, NumberIncrementStepper, N
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import UploadFile from "./UploadFile";
 import Fund from "./Fund";
+import Navbar from "../components/Navbar";
+import ProfileInfo from "../profile/ProfileInfo";
 
 
 const Upload: NextPage = () => {
@@ -29,29 +31,18 @@ const Upload: NextPage = () => {
     );
     await bundlr.ready();
     setBundlrInstance(bundlr);
-
 }
 
-
-    if (!bundlrInstance) {
-      return (
-        <div className='justify-center items-center h-screen flex '>
-          <VStack gap={8}>
-            <ConnectButton />
-            <Text className='text-4xl font-bold'>
-              Let's initialise Bundlr now
-            </Text>
-            <Button className='mt-10' onClick={initialiseBundlr}>Initialise Bundlr</Button>
-          </VStack>
-        </div>
-      )
-    }
   return (
-    <div>
-      <Fund />
-      <UploadFile />
 
-    </div>
+    <Box
+        w='100%'
+        h='100rem'
+        bgGradient='linear(to-r, gray.300, purple.50, yellow.50, purple.50, gray.300)'
+      >
+    <Navbar />
+    <UploadFile />
+    </Box>
   );
 };
 
