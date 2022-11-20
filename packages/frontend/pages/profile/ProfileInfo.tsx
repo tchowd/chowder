@@ -18,7 +18,7 @@ function ProfileInfo() {
         <VStack>
             <Circle size='10rem' backgroundColor={'red.100'}/>
             <VStack>
-                <Text>
+                <Text as='b'>
                     katieko.eth 
                 </Text>
             </VStack>

@@ -7,42 +7,41 @@ import {
     Button,
     Icon,
     IconProps,
+    Link,
   } from '@chakra-ui/react';
   
   export default function Intro() {
     return (
-      <Container maxW={'5xl'}>
+      <Container maxW={'5xl'} marginTop={'5rem'}>
         <Stack
           textAlign={'center'}
           align={'center'}
           spacing={{ base: 8, md: 10 }}
           py={{ base: 20, md: 28 }}>
           <Heading
-            fontWeight={600}
-            fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
-            lineHeight={'110%'}>
-            Meeting scheduling{' '}
-            <Text as={'span'} color={'orange.400'}>
-              made easy
-            </Text>
+            bgGradient='linear(to-l, #7928CA, #FF0080)'
+            bgClip='text'
+            fontSize='6xl'
+            fontWeight='extrabold'>
+            Storage with full {' '} user autonomy  
           </Heading>
-          <Text color={'gray.500'} maxW={'3xl'}>
-            Never miss a meeting. Never be late for one too. Keep track of your
-            meetings and receive smart reminders in appropriate times. Read your
-            smart “Daily Agenda” every morning.
+          <Text color={'gray.500'} maxW={'3xl'} fontSize={'l'}>
+            Brew storage that can never be taken down. Decentralized storage platform to store content on-chain with proof-of-location validation.
           </Text>
           <Stack spacing={6} direction={'row'}>
+            <Link href='/upload'>
             <Button
-              rounded={'full'}
+              // rounded={'full'}
+              // href='/upload'
+              borderRadius={'1rem'}
               px={6}
-              colorScheme={'orange'}
-              bg={'orange.400'}
-              _hover={{ bg: 'orange.500' }}>
-              Get started
+              colorScheme={'white'}
+              bg={'black'}
+              textDecoration={'none'}
+              _hover={{ bgGradient: 'linear(to-l, #7928CA, #FF0080)', textDecoration: 'none'}}>
+              Start For Free
             </Button>
-            <Button rounded={'full'} px={6}>
-              Learn more
-            </Button>
+            </Link>
           </Stack>
         </Stack>
       </Container>

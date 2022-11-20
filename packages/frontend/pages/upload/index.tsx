@@ -11,6 +11,7 @@ import UploadFile from "./UploadFile";
 import Fund from "./Fund";
 import Navbar from "../components/Navbar";
 import ProfileInfo from "../profile/ProfileInfo";
+import Footer from "../components/Footer";
 
 
 const Upload: NextPage = () => {
@@ -37,11 +38,12 @@ const Upload: NextPage = () => {
 
     <Box
         w='100%'
-        h='100rem'
+        h='110rem'
         bgGradient='linear(to-r, gray.300, purple.50, yellow.50, purple.50, gray.300)'
       >
     <Navbar />
     <UploadFile />
+    {/* <Footer /> */}
     </Box>
   );
 };

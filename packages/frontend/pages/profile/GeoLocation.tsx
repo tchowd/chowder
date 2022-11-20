@@ -27,8 +27,12 @@ function GeoLocation() {
         <Button onClick={getLocation}>
            <GrLocation /> Confirm Location 
         </Button>
-        <HStack> <Text> {lat}</Text> <Text> {lng}</Text> </HStack>
-		
+        { lat && lng ?
+         <HStack> <Text> {lat}</Text> <Text> {lng}</Text> </HStack>
+            :
+            null
+        }
+
 			{/* {lat && <p> {lat}</p>}
 			{lng && <p>Longitude: {lng}</p>} */}
 		</div>

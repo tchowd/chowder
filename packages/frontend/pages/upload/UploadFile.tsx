@@ -153,15 +153,16 @@ function UploadFile()  {
   
     if (!bundlrInstance) {
         return (
-          <div className='justify-center items-center h-screen flex '>
-            <VStack gap={8}>
+            <>
+            <Center marginTop={'10rem'} marginBottom={'18rem'}>
+            <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'60rem'} height={'15rem'} marginRight={'2rem'}>
+            <VStack gap={8} marginTop={'3rem'}>
               <ConnectButton />
-              <Text className='text-4xl font-bold'>
-                Let's initialise Bundlr now
-              </Text>
               <Button className='mt-10' onClick={initialiseBundlr}>Initialise Bundlr</Button>
             </VStack>
-          </div>
+          </Box>
+          </Center>
+          </>
         )
       }
 
