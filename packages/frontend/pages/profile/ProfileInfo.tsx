@@ -16,10 +16,10 @@ function ProfileInfo() {
   return (
     <Container padding={'2rem'}>
         <VStack>
-            <Circle size='10rem' backgroundColor={'red.100'}/>
+            <Circle size='10rem' backgroundColor={'green.100'}/>
             <VStack>
                 <Text as='b'>
-                    katieko.eth 
+                    turja.eth 
                 </Text>
             </VStack>
             <VStack>

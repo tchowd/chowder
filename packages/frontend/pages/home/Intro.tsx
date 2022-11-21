@@ -19,7 +19,7 @@ import {
           spacing={{ base: 8, md: 10 }}
           py={{ base: 20, md: 28 }}>
           <Heading
-            bgGradient='linear(to-l, #7928CA, #FF0080)'
+            bgGradient='linear(to-l, pink.300, yellow.400, pink.200, yellow.400, pink.300)'
             bgClip='text'
             fontSize='6xl'
             fontWeight='extrabold'>
@@ -29,7 +29,7 @@ import {
             Brew storage that can never be taken down. Decentralized storage platform to store content on-chain with proof-of-location validation.
           </Text>
           <Stack spacing={6} direction={'row'}>
-            <Link href='/upload'>
+            <Link href='/upload' textDecoration={'none'} _hover={{textDecoration: 'none'}}>
             <Button
               // rounded={'full'}
               // href='/upload'
@@ -38,7 +38,7 @@ import {
               colorScheme={'white'}
               bg={'black'}
               textDecoration={'none'}
-              _hover={{ bgGradient: 'linear(to-l, #7928CA, #FF0080)', textDecoration: 'none'}}>
+              _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}>
               Start For Free
             </Button>
             </Link>

@@ -3,9 +3,9 @@
 import { NextPage } from "next";
 import { useEffect, useState, useRef } from "react";
 import { WebBundlr } from '@bundlr-network/client';
-import { providers, utils } from 'ethers';
+import { providers, Signer, utils } from 'ethers';
 import BigNumber from 'bignumber.js';
-import { VStack, Text, Button, Circle, Input, Box, Container, Center, Divider } from "@chakra-ui/react";
+import { VStack, Text, Button, Circle, Input, Box, Container, Center, Divider, Tab, TabList, TabPanel, TabPanels, Tabs, HStack } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import PendingImages from "../profile/PendingImages";
 import ProfileInfo from "../profile/ProfileInfo";
@@ -15,6 +15,8 @@ import { readFileSync } from "fs";
 import abi from "../../utils/uploadStorage.json"
 import { ethers } from "ethers";
 import { stripZeros } from "ethers/lib/utils";
+import {useAccount} from 'wagmi'
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 
 
@@ -31,19 +33,31 @@ function UploadFile()  {
   const [image, setImage] = useState('')
   const hiddenFileInput = useRef(null);
   const [URI, setURI] = useState('')
+  const [currentUploads, setCurrentUploads] = useState(0);
+  const [hash, setHash] = useState();
   const contractAddress = "0x47b837D8F4D14Bf78C608f1a33F35DB8BE325Ca6";
-
-
-  if (window.ethereum) {
+ const {address} = useAccount()
+ let uploadStorageContract:any;
+//   if (window.ethereum) {
+//     console.log(address);
     const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+    // const signer = jsonRpcProvider.getSigner([address]);
+//     // console.log(signer);
     const signer = provider.getSigner();
     const contractABI = abi.abi;
-    const uploadStorage = new ethers.Contract(
+    uploadStorageContract = new ethers.Contract(
       contractAddress,
       contractABI,
       signer
     );
-  }
+    console.log(uploadStorageContract);
+//   }
+
+  const uploads = uploadStorageContract.upload;
+//   setCurrentUploads(uploads.toNumber());
+  console.log(uploads[0])
+
+
 
 //   const getHashes = async() => {
 //     uint256 size = uploadStorage.uploads.size();
@@ -52,6 +66,7 @@ function UploadFile()  {
 //         hash[j] = uploadStorage.uploads[j];
 //     }
 //   }
+  
 
 //   const getImage(string hash) {
 
@@ -85,6 +100,13 @@ function UploadFile()  {
     async function uploadFile(file) {
         // const data = readFileSync(file)
         let tx = await bundlrInstance?.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }, {name: "Content-Type", value: "text/plain"}])
+        console.log(tx?.data.id);
+        let storeHash = tx?.data.id;
+        // let d = await uploadStorageContract.addUpload(0,tx)
+        // let d = await signer.signMessage(uploadStorageContract.addUpload(0, storeHash));
+        // let d = await uploadStorageContract.send({from:address}).addUpload(0, "hello");
+        // await d.wait();
+        // console.log(d);
         return tx;
     }
     
@@ -92,7 +114,7 @@ function UploadFile()  {
 
     const handleUpload = async () => {
         const res = await uploadFile(file);
-        console.log('res.data', res.data);
+        // console.log('res.data', res.data);
         setURI(`http://arweave.net/${res.data.id}`)
     }
 
@@ -158,7 +180,14 @@ function UploadFile()  {
             <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'60rem'} height={'15rem'} marginRight={'2rem'}>
             <VStack gap={8} marginTop={'3rem'}>
               <ConnectButton />
-              <Button className='mt-10' onClick={initialiseBundlr}>Initialise Bundlr</Button>
+              <Button
+              onClick={initialiseBundlr}
+              borderRadius={'1rem'}
+              px={6}
+              colorScheme={'white'}
+              bg={'black'}
+              textDecoration={'none'}
+              _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}>Initialise Bundlr</Button>
             </VStack>
           </Box>
           </Center>
@@ -177,7 +206,7 @@ function UploadFile()  {
                 <Center>
                     <VStack>
                         <VStack>
-                            <Text fontSize={'sm'}>
+                            <Text fontSize={'sm'} as='b'>
                             $BNDLR Balance: 
                             </Text>
                             </VStack>
@@ -188,10 +217,17 @@ function UploadFile()  {
                          </VStack>
                          
                     <Input
-                    placeholder="add funds"
+                    placeholder="Add Funds"
                     onChange={(e) => setValue((e as any).target.value)}
                     />
-                    <Button onClick={() => fundWallet(+value)}>💸 Add Fund</Button>
+                    <Button 
+                borderRadius={'1rem'}
+                px={6}
+                colorScheme={'white'}
+                bg={'black'}
+                textDecoration={'none'}
+                _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
+                onClick={() => fundWallet(+value)}> Add Fund</Button>
                     </VStack>
                 </Center>
                 </Box>
@@ -199,7 +235,7 @@ function UploadFile()  {
                 <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'20rem'} height={'11rem'}>
                 <Center marginTop={'1rem'}>
                     <VStack>
-                    <Text fontSize={'sm'}>
+                    <Text fontSize={'sm'} as='b'>
                         Proof of Location
                     </Text>
                   
@@ -218,13 +254,30 @@ function UploadFile()  {
             </Container>
            
             
-                {balance && (
+            <Tabs  variant='soft-rounded' marginTop={'3rem'}>
+            <Container maxW={'5xl'}>
+                <TabList>
+                    <Tab>Upload</Tab>
+                    <Tab>All Uploads</Tab>
+                </TabList>
+            </Container>
+
+                <TabPanels>
+                    <TabPanel>
+                    {balance && (
                     <div>
                         <Center>
                         <Box>
                             <VStack>
-                            <Text paddingTop={'5rem'} fontSize={'xl'}> Select an image or video to get started:</Text>
-                            <Button onClick={handleClick} className='mb-4'>
+                            <Text paddingTop={'1rem'} fontSize={'xl'}> Select an image or video to get started:</Text>
+                            <Button 
+                                borderRadius={'1rem'}
+                                px={6}
+                                colorScheme={'white'}
+                                bg={'black'}
+                                textDecoration={'none'}
+                                _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
+                                onClick={handleClick}> 
                                 {image ? 'Change Selection' : 'Select Image'}
                             </Button>
                             </VStack>
@@ -249,6 +302,7 @@ function UploadFile()  {
                                 width={'18rem'}
                                 borderRadius={'1rem'}
                                 overflow={'hidden'}
+                                maxWidth={'100%'}
                                 // bgImage={`url('${image}')`}
                                 height={'15rem'}
                                 // backgroundColor={'gray.100'}
@@ -274,28 +328,27 @@ function UploadFile()  {
                             
                         </Center>
                         
-                        {/* <Box position={'relative'}
-                            width={'18rem'}
-                            borderRadius={'1rem'}
-                            overflow={'hidden'}
-                            bgImage={`url('${image}')`}
-                            height={'15rem'}
-                            // backgroundColor={'gray.100'}
-                            zIndex={-1}
-                            padding={'0.6rem'} />  
-                          <a href={URI} target="_blank"> 
-                          <Button> View Image</Button>
-                           </a> */}
-                        {/* {
-                            URI && <Text>
-                                <Text fontSize='xl'> Uploaded File:</Text> <a href={URI} target="_blank">{URI}</a>
-                            </Text>
-                        } */}
                         
                     </div>
                 )
             }
             {balance && !image ? <PendingImages/> : null}
+                    </TabPanel>
+                    <TabPanel>
+                           
+
+                    <Container maxW={'4xl'} marginTop={'2rem'}>
+                        <HStack zIndex={1}>
+                            changes coming soon
+                        </HStack>
+
+                        
+                    </Container> 
+                    </TabPanel>
+                </TabPanels>
+                </Tabs>
+                
+                
                 </div>
   );
 };

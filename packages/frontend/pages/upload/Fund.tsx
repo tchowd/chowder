@@ -98,10 +98,18 @@ if (!bundlrInstance) {
                     Your current balace is: {balance || 0} $BNDLR
                 </Text>
                 <Input
+                  
                   placeholder="add funds"
                   onChange={(e) => setValue((e as any).target.value)}
                 />
-                <Button onClick={() => fundWallet(+value)}>💸 Add Fund</Button>
+                <Button 
+                borderRadius={'1rem'}
+                px={6}
+                colorScheme={'white'}
+                bg={'black'}
+                textDecoration={'none'}
+                _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
+                onClick={() => fundWallet(+value)}> Add Fund</Button>
     </div>
   );
 };

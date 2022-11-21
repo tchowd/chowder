@@ -24,7 +24,15 @@ function GeoLocation() {
   return (
     <div>
 
-        <Button onClick={getLocation}>
+            <Button 
+                borderRadius={'1rem'}
+                px={6}
+                colorScheme={'white'}
+                bg={'black'}
+                onClick={getLocation}
+                textDecoration={'none'}
+                _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}>
+               
            <GrLocation /> Confirm Location 
         </Button>
         { lat && lng ?

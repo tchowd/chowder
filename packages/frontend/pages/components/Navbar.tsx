@@ -245,9 +245,5 @@ import {
       label: 'home',
       href: '/',
     },
-    {
-      label: 'work',
-      href: '/work',
-    }
   ];
   
