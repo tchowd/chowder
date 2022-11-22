@@ -30,3 +30,11 @@ This project is built with the following open source libraries, frameworks and l
 | ------ | ------ Included Libraries ------ |
 | [WAGMI](https://wagmi.sh/) | A set of React Hooks for Web3 |
 | [RainbowKit](https://www.rainbowkit.com/docs/introduction) | RainbowKit is a React library that makes it easy to add wallet connection to your dapp. |
+
+## Resources 
+Interested to build with Arweave or Bundlr? Trust me, you'll need to check out these links below:
+- [Bundlr Network 101: How does Bundlr work?](https://medium.com/bundlr-network/bundlr-network-101-how-does-bundlr-work-a8759d7e338e)
+- [Bundlr JS Client](https://docs.bundlr.network/docs/client/js#get-the-loaded-wallets-address)
+- [Decentralized storage with Arweave & Bundlr by Pbillingsby](https://pbillingsby.hashnode.dev/decentralized-storage-with-arweave-and-bundlr#comments-list)
+- [Permanent File Storage by Deep](https://dev.to/deep1144/permanent-file-storage-for-web3-apps-with-arweave-bundlr-nextjs-rainbowkit-and-wagmi-3d57)
+- [Arweave GraphQL](https://arweave.net/graphql)
