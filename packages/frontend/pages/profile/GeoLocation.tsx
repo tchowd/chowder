@@ -13,7 +13,6 @@ function GeoLocation() {
 		} else {
             setStatus('Locating...');
             navigator.geolocation.getCurrentPosition((position) => {
-                setStatus(null);
                 setLat(position.coords.latitude);
                 setLng(position.coords.longitude);
             }, () => {

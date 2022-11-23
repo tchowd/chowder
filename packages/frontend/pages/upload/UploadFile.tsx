@@ -31,7 +31,7 @@ function UploadFile()  {
   const [balance, setBalance] = useState<string>('');
   const [file, setFile] = useState<Buffer>()
   const [image, setImage] = useState('')
-  const hiddenFileInput = useRef(null);
+  const hiddenFileInput = useRef<HTMLDivElement>(null);
   const [URI, setURI] = useState('')
   const [currentUploads, setCurrentUploads] = useState(0);
   const [hash, setHash] = useState();
@@ -93,17 +93,22 @@ function UploadFile()  {
           return test;
       }
   }
-    const handleClick = event => {
-        hiddenFileInput.current.click();
+    const handleClick = (e: any) => {
+        hiddenFileInput?.current?.click();
     };
 
-    async function uploadFile(file) {
+    //  const handleClick = (_event: any) => {
+    //      hiddenFileInput?.current?.click();
+    //  };
+
+    async function uploadFile(file: any) {
         // const data = readFileSync(file)
         let tx = await bundlrInstance?.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }, {name: "Content-Type", value: "text/plain"}])
         console.log(tx?.data.id);
         let storeHash = tx?.data.id;
+        // console.log(storeHash)
         // let d = await uploadStorageContract.addUpload(0,tx)
-        // let d = await signer.signMessage(uploadStorageContract.addUpload(0, storeHash));
+        // let d = await signer.signMessage(uploadStorageContract.addUpload(0, storeHash), "0x00");
         // let d = await uploadStorageContract.send({from:address}).addUpload(0, "hello");
         // await d.wait();
         // console.log(d);
@@ -115,7 +120,8 @@ function UploadFile()  {
     const handleUpload = async () => {
         const res = await uploadFile(file);
         // console.log('res.data', res.data);
-        setURI(`http://arweave.net/${res.data.id}`)
+        // hiddenFileInput?.current.click();
+        setURI(`http://arweave.net/${res?.data.id}`)
     }
 
 
@@ -284,7 +290,7 @@ function UploadFile()  {
                             <input
                                 accept="image/png, image/gif, image/jpeg, text/rtf, video/mp4"
                                 type="file"
-                                ref={hiddenFileInput}
+                                ref={hiddenFileInput as React.MutableRefObject<HTMLInputElement>}
                                 onChange={onFileChange}
                                 style={{ display: 'none' }}
                             />
