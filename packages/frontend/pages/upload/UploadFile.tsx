@@ -33,11 +33,7 @@ function UploadFile()  {
   const contractAddress = "0x47b837D8F4D14Bf78C608f1a33F35DB8BE325Ca6";
  const {address} = useAccount()
  let uploadStorageContract:any;
-//   if (window.ethereum) {
-//     console.log(address);
     const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-    // const signer = jsonRpcProvider.getSigner([address]);
-//     // console.log(signer);
     const signer = provider.getSigner();
     const contractABI = abi.abi;
     uploadStorageContract = new ethers.Contract(
@@ -46,7 +42,6 @@ function UploadFile()  {
       signer
     );
     console.log(uploadStorageContract);
-//   }
 
   const uploads = uploadStorageContract.upload;
 //   setCurrentUploads(uploads.toNumber());
@@ -64,7 +59,6 @@ function UploadFile()  {
   
 
 //   const getImage(string hash) {
-
 //   }
 
     useEffect(() => {
@@ -98,9 +92,9 @@ function UploadFile()  {
 
     async function uploadFile(file: any) {
         // const data = readFileSync(file)
-        let tx = await bundlrInstance?.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }, {name: "Content-Type", value: "text/plain"}])
+        let tx = await bundlrInstance?.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }, {name: "Content-Type", value: "text/plain"}]);
         console.log(tx?.data.id);
-        let storeHash = tx?.data.id;
+        // let storeHash = tx?.data.id;
         // console.log(storeHash)
         // let d = await uploadStorageContract.addUpload(0,tx)
         // let d = await signer.signMessage(uploadStorageContract.addUpload(0, storeHash), "0x00");
@@ -128,8 +122,7 @@ function UploadFile()  {
             "matic",
             provider,
             {
-                providerUrl:
-                    process.env.NEXT_PUBLIC_ALCHEMY_RPC_URL,
+                providerUrl: "https://rpc.ankr.com/polygon_mumbai",
             }
         );
         await bundlr.ready();
@@ -155,22 +148,22 @@ function UploadFile()  {
 
 
     function parseInput(input: number) {
-        const conv = new BigNumber(input).multipliedBy(bundlrInstance!.currencyConfig.base[1])
-        if (conv.isLessThan(1)) {
+        const conversion = new BigNumber(input).multipliedBy(bundlrInstance!.currencyConfig.base[1]);
+        if (conversion.isLessThan(1)) {
             console.log('error: value too small')
             return
         } else {
-            return conv
+            return conversion
         }
     }
 
 
     async function fetchBalance() {
         if (bundlrInstance) {
-            const bal = await bundlrInstance.getLoadedBalance();
-            console.log("bal: ", utils.formatEther(bal.toString()));
-            setBalance(utils.formatEther(bal.toString()));
-            console.log("updated balance: ", utils.formatEther(bal.toString()))
+            const balance = await bundlrInstance.getLoadedBalance();
+            console.log("balance: ", utils.formatEther(balance.toString()));
+            setBalance(utils.formatEther(balance.toString()));
+            console.log("updated balance: ", utils.formatEther(balance.toString()));
         }
     }
   
@@ -222,13 +215,13 @@ function UploadFile()  {
                     onChange={(e) => setValue((e as any).target.value)}
                     />
                     <Button 
-                borderRadius={'1rem'}
-                px={6}
-                colorScheme={'white'}
-                bg={'black'}
-                textDecoration={'none'}
-                _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
-                onClick={() => fundWallet(+value)}> Add Fund</Button>
+                        borderRadius={'1rem'}
+                        px={6}
+                        colorScheme={'white'}
+                        bg={'black'}
+                        textDecoration={'none'}
+                        _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
+                        onClick={() => fundWallet(+value)}> Add Fund</Button>
                     </VStack>
                 </Center>
                 </Box>
@@ -316,8 +309,6 @@ function UploadFile()  {
                             </Box>
                             </VStack>
                             </>
-                            
-                            
                         }
                        
                         { URI &&  
@@ -333,6 +324,7 @@ function UploadFile()  {
                     </div>
                 )
             }
+
             {balance && !image ? <PendingImages/> : null}
                     </TabPanel>
                     <TabPanel>
@@ -342,14 +334,11 @@ function UploadFile()  {
                         <HStack zIndex={1}>
                             changes coming soon
                         </HStack>
-
-                        
+ 
                     </Container> 
                     </TabPanel>
                 </TabPanels>
                 </Tabs>
-                
-                
                 </div>
   );
 };

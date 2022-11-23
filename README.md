@@ -38,3 +38,4 @@ Interested to build with Arweave or Bundlr? Trust me, you'll need to check out t
 - [Decentralized storage with Arweave & Bundlr by Pbillingsby](https://pbillingsby.hashnode.dev/decentralized-storage-with-arweave-and-bundlr#comments-list)
 - [Permanent File Storage by Deep](https://dev.to/deep1144/permanent-file-storage-for-web3-apps-with-arweave-bundlr-nextjs-rainbowkit-and-wagmi-3d57)
 - [Arweave GraphQL](https://arweave.net/graphql)
+- [Customize Button](https://medium.com/web-dev-survey-from-kyoto/how-to-customize-the-file-upload-button-in-react-b3866a5973d8)
