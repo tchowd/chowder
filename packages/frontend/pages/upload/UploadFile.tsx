@@ -20,11 +20,6 @@ import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 
 
-type Props = {
-    upload: any;
-  };
-
-
 function UploadFile()  {
   const [value, setValue] = useState('')
   const [bundlrInstance, setBundlrInstance] = useState<WebBundlr>();
