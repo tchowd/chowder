@@ -45,7 +45,14 @@ function UploadFile()  {
 
   const uploads = uploadStorageContract.upload;
 //   setCurrentUploads(uploads.toNumber());
-  console.log(uploads[0])
+  
+    console.log(uploads[0])
+    
+    // function getHashes = async() => {
+    //     for(int i=0; i<uploads.length;i++) {
+    //         console.log(uploads[i])
+    //     }
+    // }
 
 
 
@@ -94,10 +101,10 @@ function UploadFile()  {
         // const data = readFileSync(file)
         let tx = await bundlrInstance?.uploader.upload(file, [{ name: "Content-Type", value: "image/png" }, {name: "Content-Type", value: "text/plain"}]);
         console.log(tx?.data.id);
-        // let storeHash = tx?.data.id;
+        let storeHash = tx?.data.id;
         // console.log(storeHash)
         // let d = await uploadStorageContract.addUpload(0,tx)
-        // let d = await signer.signMessage(uploadStorageContract.addUpload(0, storeHash), "0x00");
+        let d = await signer.signMessage(uploadStorageContract.addUpload(0, storeHash));
         // let d = await uploadStorageContract.send({from:address}).addUpload(0, "hello");
         // await d.wait();
         // console.log(d);
@@ -153,9 +160,11 @@ function UploadFile()  {
             console.log('error: value too small')
             return
         } else {
-            return conversion
+            return conversion;
         }
     }
+
+
 
 
     async function fetchBalance() {
@@ -195,56 +204,53 @@ function UploadFile()  {
         <ProfileInfo />
             <Container maxW={'7xl'}>
                 <Center>
-                
-                <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'20rem'} height={'11rem'} marginRight={'2rem'}>
-                <Center>
-                    <VStack>
-                        <VStack>
+                        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'20rem'} height={'11rem'} marginRight={'2rem'}>
+                            <Center>
+                                <VStack>
+                                    <VStack>
+                                        <Text fontSize={'sm'} as='b'>
+                                        $BNDLR Balance: 
+                                        </Text>
+                                        </VStack>
+                                        <VStack>
+                                        <Text fontSize={'sm'}>
+                                            {balance || 0} 
+                                        </Text>
+                                    </VStack>
+                                    
+                                <Input
+                                placeholder="Add Funds"
+                                onChange={(e) => setValue((e as any).target.value)}
+                                />
+                                <Button 
+                                    borderRadius={'1rem'}
+                                    px={6}
+                                    colorScheme={'white'}
+                                    bg={'black'}
+                                    textDecoration={'none'}
+                                    _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
+                                    onClick={() => fundWallet(+value)}> Add Fund</Button>
+                                </VStack>
+                            </Center>
+                        </Box>
+
+                        <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'20rem'} height={'11rem'}>
+                        <Center marginTop={'1rem'}>
+                            <VStack>
                             <Text fontSize={'sm'} as='b'>
-                            $BNDLR Balance: 
+                                Proof of Location
+                            </Text>
+                        
+                            <GeoLocation />
+
+                            <Text fontSize={'sm'}>
+                                Why should I share my location?
                             </Text>
                             </VStack>
-                            <VStack>
-                            <Text fontSize={'sm'}>
-                                {balance || 0} 
-                            </Text>
-                         </VStack>
-                         
-                    <Input
-                    placeholder="Add Funds"
-                    onChange={(e) => setValue((e as any).target.value)}
-                    />
-                    <Button 
-                        borderRadius={'1rem'}
-                        px={6}
-                        colorScheme={'white'}
-                        bg={'black'}
-                        textDecoration={'none'}
-                        _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
-                        onClick={() => fundWallet(+value)}> Add Fund</Button>
-                    </VStack>
-                </Center>
-                </Box>
-
-                <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' backgroundColor={'white'} padding={'1rem'} width={'20rem'} height={'11rem'}>
-                <Center marginTop={'1rem'}>
-                    <VStack>
-                    <Text fontSize={'sm'} as='b'>
-                        Proof of Location
-                    </Text>
-                  
-                    <GeoLocation />
-
-                    <Text fontSize={'sm'}>
-                        Why should I share my location?
-                    </Text>
-                    </VStack>
-                </Center>
-                </Box>
-                            
-                            </Center>
-
-                            <Divider maxW={'8xl'} paddingTop={'2rem'}/>
+                        </Center>
+                        </Box>       
+                     </Center>
+                <Divider maxW={'8xl'} paddingTop={'2rem'}/>
             </Container>
            
             
@@ -290,31 +296,34 @@ function UploadFile()  {
                             image && 
                             <>
                             <VStack>
-                            <Box
-                                position={'relative'}
-                                bgImage={`url('${image}')`}
-                                width={'18rem'}
-                                borderRadius={'1rem'}
-                                overflow={'hidden'}
-                                maxWidth={'100%'}
-                                // bgImage={`url('${image}')`}
-                                height={'15rem'}
-                                // backgroundColor={'gray.100'}
-                                zIndex={1}
-                                padding={'0.6rem'}
-                            >
-                             <Center marginTop={'5rem'}>
-                                <Button className='bg-gray-200 rounded px-8 py-2 text-black hover:bg-gray-100' onClick={handleUpload}>Upload File</Button>
-                            </Center>
-                            </Box>
+                                <Box
+                                    position={'relative'}
+                                    bgImage={`url('${image}')`}
+                                    width={'18rem'}
+                                    borderRadius={'1rem'}
+                                    overflow={'hidden'}
+                                    maxWidth={'100%'}
+                                    height={'15rem'}
+                                    zIndex={1}
+                                    padding={'0.6rem'}>
+                                    <Center marginTop={'5rem'}>
+                                        <Button className='bg-gray-200 rounded px-8 py-2 text-black hover:bg-gray-100' onClick={handleUpload}>Upload File</Button>
+                                    </Center>
+                                </Box>
+                                
                             </VStack>
                             </>
                         }
                        
                         { URI &&  
-                            <a href={URI} target="_blank"> 
-                                <Button> View Image</Button>
-                             </a>
+                        
+                                <a href={URI} target="_blank"> 
+                                <VStack>
+                                    <Button> View Image</Button>
+                                    <Text> Transaction Confirmed: {URI} </Text>
+                                </VStack>
+                                </a>
+                                
                         }
                         </VStack>
                             
@@ -326,10 +335,9 @@ function UploadFile()  {
             }
 
             {balance && !image ? <PendingImages/> : null}
+
                     </TabPanel>
                     <TabPanel>
-                           
-
                     <Container maxW={'4xl'} marginTop={'2rem'}>
                         <HStack zIndex={1}>
                             changes coming soon
@@ -338,7 +346,7 @@ function UploadFile()  {
                     </Container> 
                     </TabPanel>
                 </TabPanels>
-                </Tabs>
+            </Tabs>
                 </div>
   );
 };

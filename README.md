@@ -1,6 +1,8 @@
 # Chowder 
 Decentralized storage platform to store content on-chain with proof-of-location validation. This platform enables any user to anonymously (via crypto wallet) upload images, gifs and text into Arweave to be permanently stored and display their past postings on-chain.
 
+** Please Note: ** This project is under construction. Code revamp for deployment and past postings 
+
 ## Objective
 Decentralized storage enables individuals to store content permentantly and anonymously. Why does this matter? Around the world, there are numerous cases of authoritarian control over entire populations directing the ability to have free speech and own freedom.
 
@@ -9,7 +11,6 @@ This platform addresses:
 2. Confirm proof-of-location. Validation that an individual is located in the region from where they are sharing images from (timing can be confirmed via the transactions on-chain)
 
 ## Technologies
-
 This project is built with the following open source libraries, frameworks and languages. User choice of framework used, available in plain js or typescript.
 | Tech | Description |
 | --------------------------------------------- | ------------------------------------------------------------------ |
