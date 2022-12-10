@@ -27,6 +27,7 @@
     ]
   },
   "dependencies": {
-    "react-icons": "^4.6.0"
+    "react-icons": "^4.6.0",
+    "web3": "^1.8.1"
   }
 }

@@ -7,55 +7,30 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "_id",
           "type": "uint256"
-        }
-      ],
-      "name": "ImageHashes",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "ImageName",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_index",
-          "type": "uint256"
-        }
-      ],
-      "name": "getImgHash",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
         },
+        {
+          "internalType": "string",
+          "name": "_hash",
+          "type": "string"
+        }
+      ],
+      "name": "addUpload",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "hashToId",
+      "outputs": [
         {
           "internalType": "string",
           "name": "",
@@ -67,12 +42,12 @@
     },
     {
       "inputs": [],
-      "name": "numHashes",
+      "name": "retrieve",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "string",
           "name": "",
-          "type": "uint256"
+          "type": "string"
         }
       ],
       "stateMutability": "view",
@@ -81,19 +56,38 @@
     {
       "inputs": [
         {
-          "internalType": "string",
-          "name": "_imgHash",
-          "type": "string"
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "store",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "upload",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
         },
         {
           "internalType": "string",
-          "name": "_imgName",
+          "name": "hash",
           "type": "string"
         }
       ],
-      "name": "setImgHash",
-      "outputs": [],
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     }
   ],

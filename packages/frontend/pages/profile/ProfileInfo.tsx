@@ -5,13 +5,11 @@ import { useEnsName, useAccount, useEnsAvatar,  useEnsAddress } from 'wagmi'
 
 function ProfileInfo() {
 
-    const { address, isConnecting, isDisconnected } = useAccount()
+    const { address } = useAccount()
 
-    //   const result = useEnsAvatar({
-    //      address: '0x765374f6E28879cC3f75138e008c0f2AB9Dbe1D9',
-    //     })
-        
-        
+    const { data, isError, isLoading } = useEnsName({
+        address,
+      })
 
   return (
     <Container padding={'2rem'}>
@@ -19,7 +17,8 @@ function ProfileInfo() {
             <Circle size='10rem' backgroundColor={'green.100'}/>
             <VStack>
                 <Text as='b'>
-                    turja.eth 
+                    {data}
+                    turja.eth
                 </Text>
             </VStack>
             <VStack>
