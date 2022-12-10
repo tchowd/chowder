@@ -3,6 +3,9 @@ Decentralized storage platform to store content on-chain with proof-of-location 
 
 ** Please Note: ** This project is under construction. Code revamp for deployment and past postings 
 
+https://user-images.githubusercontent.com/42366823/206871049-0610a266-09a3-43cb-8501-7d98bf51e59b.mp4
+
+
 ## Objective
 Decentralized storage enables individuals to store content permentantly and anonymously. Why does this matter? Around the world, there are numerous cases of authoritarian control over entire populations directing the ability to have free speech and own freedom.
 
