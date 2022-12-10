@@ -36,6 +36,8 @@ function UploadFile()  {
   const [numHashes, setNumHashes] = useState(0);
   const [imageHashes, setImageHashes] = useState([]);
   const [imageNames, setImageNames] = useState([]);
+  const [data, setData] = useState([]);
+
 //   const contractAddress = "0x47b837D8F4D14Bf78C608f1a33F35DB8BE325Ca6";
 
 // OG contract address
@@ -59,49 +61,45 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
   const uploads = uploadStorageContract.ImageHashes;
   console.log("this is the uploads:", uploads)
 
-    async function getHashes() {
-      if (contract && signer) {
-        const numHashes = await contract.numHashes();
-        setNumHashes(numHashes);
-        for (let i = 0; i < numHashes; i++) {
-          const [imageName, imageHash] = await contract.getImgHash(i);
-          setNumHashes(numHashes);
-
-        //   setImageHashes(imageName, imageHash);
-        //   setImageNames(prevNames => [...prevNames, imageName]);
-        }
-      }
-    }
-    getHashes()
-    console.log('hashes:', getHashes())
-
-
-
-  
-
-//   setCurrentUploads(uploads.toNumber());
-  
-    // console.log(uploads[0])
-    
-    // function getHashes = async() => {
-    //     for(int i=0; i<uploads.length;i++) {
-    //         console.log(uploads[i])
+    // async function getHashes() {
+    //   if (contract && signer) {
+    //     const numHashes = await contract.numHashes();
+    //     setNumHashes(numHashes);
+    //     const data: any[] = [];
+    //     for (let i = 0; i < numHashes.length; i++) {
+    //         const storageEntry = contract.getImgHash(i);
+    //     //   setNumHashes(storageEntry);
+    //       data.push(storageEntry);
     //     }
+    //     return data
+        
+    //   }
     // }
+    // setData(data);
+    // console.log('num hashes:', data);
+
+    async function getTotalHashes() {
+        const data: any[] = [];
+        const numHashes2 = uploadStorageContract.numHashes();
+        data.push(numHashes2)
+        console.log(data)
+        // setData(data)
+        // const hashes = numHashes2.BigNumber.toNumber();
+        // console.log(numHashes2)
+        // console.log((numHashes2.toString()))
+
+    }
+    getTotalHashes()
+
+    // console.log(hashes)
+
+    const numHashes3 = uploadStorageContract.getImgHash([35]);
+    // console.log(numHashes3)
 
 
 
-//   const getHashes = async() => {
-//     uint256 size = uploadStorage.uploads.size();
-//     string hash[size];
-//     for(int j = 0; i < size; i++){
-//         hash[j] = uploadStorage.uploads[j];
-//     }
-//   }
-  
+    
 
-//   const getImage(string hash) {
-//   }
 
     useEffect(() => {
         if (bundlrInstance) {
@@ -139,7 +137,7 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
         let storeHash = tx?.data.id;
         // console.log(storeHash)
         // let d = await uploadStorageContract.addUpload(0,tx)
-        let sign = await signer.signMessage('0x',uploadStorageContract.setImgHash(0, storeHash));
+        let sign = await signer.signMessage('0x', uploadStorageContract.setImgHash(0, storeHash));
         // let d = await uploadStorageContract.send({from:address}).addUpload(0, "hello");
         // await d.wait();
         console.log("this is the sign:", sign);
@@ -236,12 +234,7 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
         )
       }
 
-      const arrHash = [{
-        arrName: ["first img", "testing second image"],
-        arrHVal: ["by_Ttm4bzBmr2ApOb4eYebB8Y_gfIdadhTe-9aMlsW4","Rk2OpMto0UwxIuWEP1kcfW3yX0Vq52TJ84GDM334-p4"] 
-    }];
 
-    
     const url = `http://arweave.net/`
     const image2 = 'by_Ttm4bzBmr2ApOb4eYebB8Y_gfIdadhTe-9aMlsW4'
    
@@ -390,23 +383,32 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
                     <TabPanel>
                     <Container maxW={'4xl'} marginTop={'2rem'}>
                         <HStack zIndex={1}>
-                            {/* changes coming soon */}
+                            {/* changes coming soon */} 
+                            <Text> {data}</Text>
                          
-                                 
-                                {/* <OpenAI /> */}
-                                <div className="">
-      <p>Number of Hashes: {numHashes}</p>
-      <ul>
-        {imageHashes.map((imageHash, index) => (
-          <li key={index}>{imageHash}</li>
-        ))}
-      </ul>
-      <ul>
-        {imageNames.map((imageName, index) => (
-          <li key={index}>{imageName}</li>
-        ))}
-      </ul>
-    </div>
+                            <Box
+                                position={'relative'}
+                                bgImage={`url('${image}')`}
+                                width={'18rem'}
+                                borderRadius={'1rem'}
+                                overflow={'hidden'}
+                                maxWidth={'100%'}
+                                height={'15rem'}
+                                zIndex={1}
+                                padding={'0.6rem'}/>
+
+                            <Box
+                                position={'relative'}
+                                bgImage={`url('${image}')`}
+                                width={'18rem'}
+                                borderRadius={'1rem'}
+                                overflow={'hidden'}
+                                maxWidth={'100%'}
+                                height={'15rem'}
+                                zIndex={1}
+                                padding={'0.6rem'}/>
+
+                               
                         </HStack>
  
                     </Container> 
