@@ -80,16 +80,32 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
 
     async function getTotalHashes() {
         const data: any[] = [];
-        const numHashes2 = uploadStorageContract.numHashes();
-        data.push(numHashes2)
-        console.log(data)
-        // setData(data)
-        // const hashes = numHashes2.BigNumber.toNumber();
-        // console.log(numHashes2)
-        // console.log((numHashes2.toString()))
+        var numHashes2 = uploadStorageContract.numHashes();
+        console.log(numHashes2)
+        const temp2 = Object.values(numHashes2)
+        console.log(numHashes2.hasOwnProperty('_hex'))
+        // let key = "_hex"
+        // for( key in numHashes2) {
+        //     if(numHashes2.hasOwnProperty(key)) {
+        //         var value = numHashes2[key];
+        //         console.log("test", value)
+        //         //do something with value;
+        //         return value
+        //     }
+        //     console.log("test", value)
+
+        // }
+        console.log("test", value)
+
 
     }
     getTotalHashes()
+
+    // const numHashes2 = uploadStorageContract.numHashes();
+    // console.log("numHashes:", numHashes2)
+    // const numHex = new BigNumber(numHashes2._hex, 16).toString()
+
+
 
     // console.log(hashes)
 
@@ -137,7 +153,7 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
         let storeHash = tx?.data.id;
         // console.log(storeHash)
         // let d = await uploadStorageContract.addUpload(0,tx)
-        let sign = await signer.signMessage('0x', uploadStorageContract.setImgHash(0, storeHash));
+        let sign = await signer.signMessage(uploadStorageContract.setImgHash(0, storeHash));
         // let d = await uploadStorageContract.send({from:address}).addUpload(0, "hello");
         // await d.wait();
         console.log("this is the sign:", sign);
@@ -384,19 +400,9 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
                     <Container maxW={'4xl'} marginTop={'2rem'}>
                         <HStack zIndex={1}>
                             {/* changes coming soon */} 
-                            <Text> {data}</Text>
+                            
+                            <Text> dsdsds {data} </Text>
                          
-                            <Box
-                                position={'relative'}
-                                bgImage={`url('${image}')`}
-                                width={'18rem'}
-                                borderRadius={'1rem'}
-                                overflow={'hidden'}
-                                maxWidth={'100%'}
-                                height={'15rem'}
-                                zIndex={1}
-                                padding={'0.6rem'}/>
-
                             <Box
                                 position={'relative'}
                                 bgImage={`url('${image}')`}
