@@ -5,9 +5,9 @@ import { useEffect, useState, useRef } from "react";
 import { WebBundlr } from '@bundlr-network/client';
 import { providers, utils } from 'ethers';
 import BigNumber from 'bignumber.js';
-import { VStack, Text, Button, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Input, Box } from "@chakra-ui/react";
+import { VStack, Text, Button, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Input, Box, Link } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import UploadFile from "./UploadFile";
+import UploadFile from "./upload/UploadFile";
 
 
 const Fund: NextPage = () => {
@@ -110,6 +110,12 @@ if (!bundlrInstance) {
                 textDecoration={'none'}
                 _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
                 onClick={() => fundWallet(+value)}> Add Fund</Button>
+
+                <Link href='/upload'>
+                <Button>
+                  Go to Upload Page
+                </Button>
+                </Link>
     </div>
   );
 };
