@@ -44,13 +44,13 @@ const Fund: NextPage = () => {
     async function fundWallet(amount: number) {
         try {
             if (bundlrInstance) {
-                if (!amount) return
-                const amountParsed = parseInput(amount)
+                // if (!amount) return 
+                const amountParsed = parseInput(amount);
                 if (amountParsed) {
-                    let response = await bundlrInstance.fund(amountParsed)
-                    console.log('Wallet funded: ', response)
+                    let response = await bundlrInstance.fund(amountParsed);
+                    console.log('Wallet funded: ', response);
                 }
-                fetchBalance()
+                fetchBalance();
             }
         } catch (error) {
             console.log("error", error);
@@ -58,12 +58,12 @@ const Fund: NextPage = () => {
     }
 
     function parseInput(input: number) {
-        const conv = new BigNumber(input).multipliedBy(bundlrInstance!.currencyConfig.base[1])
+        const conv = new BigNumber(input).multipliedBy(bundlrInstance!.currencyConfig.base[1]);
         if (conv.isLessThan(1)) {
-            console.log('error: value too small')
+            console.log('error: value too small');
             return
         } else {
-            return conv
+            return conv;
         }
     }
 
@@ -73,7 +73,7 @@ const Fund: NextPage = () => {
             const bal = await bundlrInstance.getLoadedBalance();
             console.log("bal: ", utils.formatEther(bal.toString()));
             setBalance(utils.formatEther(bal.toString()));
-            console.log("updated balance: ", utils.formatEther(bal.toString()))
+            console.log("updated balance: ", utils.formatEther(bal.toString()));
         }
     }
   
