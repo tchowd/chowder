@@ -101,6 +101,18 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
     }
     getTotalHashes()
 
+    // write a function that converts the object numHashes2 into a string
+    // then use that string to convert it into a number 
+    // then use that number to get the hashes from the contract
+    // then use those hashes to get the image names from the contract
+    // then use those image names to display the images on the profile page
+
+    const hashes = uploadStorageContract.getImgHash([0]);
+    console.log("hashes:", hashes)
+    const hashes2 = uploadStorageContract.getImgHash([1]);
+    console.log("hashes:", hashes2)
+
+
     // const numHashes2 = uploadStorageContract.numHashes();
     // console.log("numHashes:", numHashes2)
     // const numHex = new BigNumber(numHashes2._hex, 16).toString()
@@ -162,7 +174,7 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
         return tx;
     }
     
-
+    
 
     const handleUpload = async () => {
         const res = await uploadFile(file);
@@ -313,114 +325,7 @@ const contractAddress = "0x4Bb2E65EF849003aC710b08D17Ed9D4B1bDDF8Bf"
             </Container>
            
             
-            <Tabs  variant='soft-rounded' marginTop={'3rem'}>
-            <Container maxW={'5xl'}>
-                <TabList>
-                    <Tab>Upload</Tab>
-                    <Tab>All Uploads</Tab>
-                </TabList>
-            </Container>
-
-                <TabPanels>
-                    <TabPanel>
-                    {balance && (
-                    <div>
-                        <Center>
-                        <Box>
-                            <VStack>
-                            <Text paddingTop={'1rem'} fontSize={'xl'}> Select an image or video to get started:</Text>
-                            <Button 
-                                borderRadius={'1rem'}
-                                px={6}
-                                colorScheme={'white'}
-                                bg={'black'}
-                                textDecoration={'none'}
-                                _hover={{ backgroundColor: 'white', color: 'black', borderColor: 'black', border: '1px', textDecoration: 'none'}}
-                                onClick={handleClick}> 
-                                {image ? 'Change Selection' : 'Select Image'}
-                            </Button>
-                            </VStack>
-                            <input
-                                accept="image/png, image/gif, image/jpeg, text/rtf, video/mp4"
-                                type="file"
-                                ref={hiddenFileInput as React.MutableRefObject<HTMLInputElement>}
-                                onChange={onFileChange}
-                                style={{ display: 'none' }}
-                            />
-                            </Box>
-                            </Center>
-                            <Center marginTop={'3rem'}>
-                            <VStack>
-                        {
-                            image && 
-                            <>
-                            <VStack>
-                                <Box
-                                    position={'relative'}
-                                    bgImage={`url('${image}')`}
-                                    width={'18rem'}
-                                    borderRadius={'1rem'}
-                                    overflow={'hidden'}
-                                    maxWidth={'100%'}
-                                    height={'15rem'}
-                                    zIndex={1}
-                                    padding={'0.6rem'}>
-                                    <Center marginTop={'5rem'}>
-                                        <Button className='bg-gray-200 rounded px-8 py-2 text-black hover:bg-gray-100' onClick={handleUpload}>Upload File</Button>
-                                    </Center>
-                                </Box>
-                                
-                            </VStack>
-                            </>
-                        }
-                       
-                        { URI &&  
-                        
-                                <a href={URI} target="_blank"> 
-                                <VStack>
-                                    <Button> View Image</Button>
-                                    <Text> Transaction Confirmed: {URI} </Text>
-                                </VStack>
-                                </a>
-                                
-                        }
-                        </VStack>
-                            
-                        </Center>
-                        
-                        
-                    </div>
-                )
-            }
-
-            {balance && !image ? <PendingImages/> : null}
-
-                    </TabPanel>
-                    <TabPanel>
-                    <Container maxW={'4xl'} marginTop={'2rem'}>
-                        <HStack zIndex={1}>
-                            {/* changes coming soon */} 
-                            
-                            <Text> dsdsds {data} </Text>
-                         
-                            <Box
-                                position={'relative'}
-                                bgImage={`url('${image}')`}
-                                width={'18rem'}
-                                borderRadius={'1rem'}
-                                overflow={'hidden'}
-                                maxWidth={'100%'}
-                                height={'15rem'}
-                                zIndex={1}
-                                padding={'0.6rem'}/>
-
-                               
-                        </HStack>
- 
-                    </Container> 
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
+           
                 </div>
   );
 };
